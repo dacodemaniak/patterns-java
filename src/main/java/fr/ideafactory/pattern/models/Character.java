@@ -3,6 +3,7 @@ package fr.ideafactory.pattern.models;
 public abstract class Character {
 	protected Weapon weapon;
 	protected Protection protection;
+	protected Integer lifePoints;
 	
 	protected String name;
 	
@@ -20,6 +21,14 @@ public abstract class Character {
 	
 	public void setProtection(Protection protection) {
 		this.protection = protection;
+	}
+	
+	public void setLifePoints(Integer lifePoints) {
+		this.lifePoints = lifePoints;
+	}
+	
+	public Integer getLifePoints() {
+		return this.lifePoints;
 	}
 	
 	public abstract String whoAreYou();

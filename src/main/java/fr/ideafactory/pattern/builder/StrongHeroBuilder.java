@@ -14,6 +14,7 @@ public class StrongHeroBuilder implements HeroBuilder {
 
 	public void buildCharacter() {
 		this.hero = new Hero();
+		this.hero.setLifePoints(1000);
 	}
 
 	public void buildWeapon() {

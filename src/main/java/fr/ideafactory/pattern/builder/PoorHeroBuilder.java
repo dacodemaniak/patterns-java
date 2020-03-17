@@ -12,6 +12,7 @@ public class PoorHeroBuilder implements HeroBuilder {
 
 	public void buildCharacter() {
 		this.hero = new Hero();
+		this.hero.setLifePoints(500);
 	}
 
 	public void buildWeapon() {
