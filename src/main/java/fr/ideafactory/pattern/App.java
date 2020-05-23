@@ -19,6 +19,10 @@ import fr.ideafactory.pattern.builder.HeroBuilder;
 import fr.ideafactory.pattern.builder.HeroDirector;
 import fr.ideafactory.pattern.builder.PoorHeroBuilder;
 import fr.ideafactory.pattern.builder.StrongHeroBuilder;
+import fr.ideafactory.pattern.decorator.Buy;
+import fr.ideafactory.pattern.decorator.BuyEquipment;
+import fr.ideafactory.pattern.decorator.BuyEquipmentWithExtra;
+import fr.ideafactory.pattern.decorator.BuyEquipmentWithInsurance;
 import fr.ideafactory.pattern.exceptions.ProtectionNotFoundException;
 import fr.ideafactory.pattern.exceptions.WeaponNotFoundException;
 import fr.ideafactory.pattern.facade.MeetFacade;
@@ -106,6 +110,20 @@ public class App
         System.out.println("After (Hero) : " + aFight.getHero().getName() + " : " + aFight.getHero().getLifePoints());
         System.out.println("After (Bad) : " + aFight.getBad().getName() + " : " + aFight.getBad().getLifePoints());
         
+        // Using decorators
+        Buy singleEquipment = new BuyEquipment();
+        System.out.println("Single equipment cost : " + singleEquipment.cost());
         
+        Buy equipmentWithExtra = new BuyEquipmentWithExtra(singleEquipment);
+        System.out.println("Equipment with extra full cost : " + equipmentWithExtra.cost());
+        
+        Buy equipmentWithInsurance = new BuyEquipmentWithInsurance(singleEquipment);
+        System.out.println("Equipment with insurance full cost : " + equipmentWithInsurance.cost());
+        
+        // To get full options costs
+        Buy equipment = new BuyEquipment();
+        Buy withExtra = new BuyEquipmentWithExtra(equipment);
+        Buy fullOptionsEquipment = new BuyEquipmentWithInsurance(withExtra);
+        System.out.println("Full option equipement cost : " + fullOptionsEquipment.cost());
     }
 }
