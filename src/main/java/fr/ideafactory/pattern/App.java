@@ -15,10 +15,16 @@ import fr.ideafactory.pattern.prototype.Fight;
 import fr.ideafactory.pattern.prototype.Meet;
 import fr.ideafactory.pattern.prototype.MeetRegistry;
 import fr.ideafactory.pattern.prototype.Negociation;
+import fr.ideafactory.pattern.adapter.MYSQLSelect;
+import fr.ideafactory.pattern.adapter.PGSQLAdapter;
+import fr.ideafactory.pattern.adapter.PGSQLSelect;
+import fr.ideafactory.pattern.bridge.SuccessSubmitButton;
 import fr.ideafactory.pattern.builder.HeroBuilder;
 import fr.ideafactory.pattern.builder.HeroDirector;
 import fr.ideafactory.pattern.builder.PoorHeroBuilder;
 import fr.ideafactory.pattern.builder.StrongHeroBuilder;
+import fr.ideafactory.pattern.composite.Component;
+import fr.ideafactory.pattern.composite.Composite;
 import fr.ideafactory.pattern.decorator.Buy;
 import fr.ideafactory.pattern.decorator.BuyEquipment;
 import fr.ideafactory.pattern.decorator.BuyEquipmentWithExtra;
@@ -125,5 +131,30 @@ public class App
         Buy withExtra = new BuyEquipmentWithExtra(equipment);
         Buy fullOptionsEquipment = new BuyEquipmentWithInsurance(withExtra);
         System.out.println("Full option equipement cost : " + fullOptionsEquipment.cost());
+        
+        // Playing with Adapter
+        MYSQLSelect select = new MYSQLSelect();
+        System.out.println("Like operation for MySQL : " + select.likeClause("Hero"));
+        PGSQLAdapter adapter = new PGSQLAdapter();
+        PGSQLSelect pgSelect = new PGSQLSelect(adapter);
+        System.out.println("Like operation for PGSQL : " + pgSelect.likeClause("Hero"));
+        
+        // Create button with Bridge Implementation
+        SuccessSubmitButton button = new SuccessSubmitButton();
+        System.out.println("Button was rendered as : " + button.render());
+        
+        // Using Composite to compute a whole pack
+        Component battery1 = new Component("battery", 1.50);
+        Component battery2 = new Component("battery", 1.50);
+        Composite batteryPack = new Composite();
+        batteryPack.add(battery1).add(battery2);
+        
+        Component remote = new Component("Remote Controller", 15.00);
+        
+        Composite remotePack = new Composite();
+        remotePack.add(remote).add(batteryPack);
+        
+        System.out.println("Total cost of remotePack : " + remotePack.totalize());
+        
     }
 }
