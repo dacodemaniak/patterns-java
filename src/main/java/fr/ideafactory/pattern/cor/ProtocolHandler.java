@@ -12,6 +12,7 @@ public class ProtocolHandler extends HttpRequestHandler {
 
 	public HttpRequestHandlerInterface handle(HttpRequest request) throws ProtocolNotHandledException, NoHttpHandlerException, VerbNotAllowedException {
 		if (request.protocol.equals("https")) {
+			this.protocol = request.protocol;
 			return super.handle(request);
 		}
 		throw new ProtocolNotHandledException();

@@ -26,6 +26,7 @@ import fr.ideafactory.pattern.builder.StrongHeroBuilder;
 import fr.ideafactory.pattern.composite.Component;
 import fr.ideafactory.pattern.composite.Composite;
 import fr.ideafactory.pattern.cor.HttpRequest;
+import fr.ideafactory.pattern.cor.HttpRequestHandler;
 import fr.ideafactory.pattern.cor.HttpRequestHandlerInterface;
 import fr.ideafactory.pattern.cor.ProtocolHandler;
 import fr.ideafactory.pattern.cor.VerbHandler;
@@ -165,6 +166,9 @@ public class App
         
         //Playing with COR
         HttpRequest request = new HttpRequest();
+        request.protocol = "https";
+        request.verb = "get";
+        request.route = "/user";
         
         HttpRequestHandlerInterface protocolHandler = new ProtocolHandler();
         HttpRequestHandlerInterface verbHandler = new VerbHandler();
@@ -173,7 +177,8 @@ public class App
         
         // Go through the chain
         try {
-        	HttpRequestHandlerInterface lastHandler = protocolHandler.handle(request);
+        	HttpRequestHandler lastHandler = (HttpRequestHandler) protocolHandler.handle(request);
+        	System.out.println(lastHandler);
         } catch (NoHttpHandlerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
