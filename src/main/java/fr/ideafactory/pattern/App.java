@@ -25,11 +25,18 @@ import fr.ideafactory.pattern.builder.PoorHeroBuilder;
 import fr.ideafactory.pattern.builder.StrongHeroBuilder;
 import fr.ideafactory.pattern.composite.Component;
 import fr.ideafactory.pattern.composite.Composite;
+import fr.ideafactory.pattern.cor.HttpRequest;
+import fr.ideafactory.pattern.cor.HttpRequestHandlerInterface;
+import fr.ideafactory.pattern.cor.ProtocolHandler;
+import fr.ideafactory.pattern.cor.VerbHandler;
 import fr.ideafactory.pattern.decorator.Buy;
 import fr.ideafactory.pattern.decorator.BuyEquipment;
 import fr.ideafactory.pattern.decorator.BuyEquipmentWithExtra;
 import fr.ideafactory.pattern.decorator.BuyEquipmentWithInsurance;
+import fr.ideafactory.pattern.exceptions.NoHttpHandlerException;
 import fr.ideafactory.pattern.exceptions.ProtectionNotFoundException;
+import fr.ideafactory.pattern.exceptions.ProtocolNotHandledException;
+import fr.ideafactory.pattern.exceptions.VerbNotAllowedException;
 import fr.ideafactory.pattern.exceptions.WeaponNotFoundException;
 import fr.ideafactory.pattern.facade.MeetFacade;
 import fr.ideafactory.pattern.factory.AbstractFactory;
@@ -156,5 +163,26 @@ public class App
         
         System.out.println("Total cost of remotePack : " + remotePack.totalize());
         
+        //Playing with COR
+        HttpRequest request = new HttpRequest();
+        
+        HttpRequestHandlerInterface protocolHandler = new ProtocolHandler();
+        HttpRequestHandlerInterface verbHandler = new VerbHandler();
+        
+        protocolHandler.next(verbHandler);
+        
+        // Go through the chain
+        try {
+        	HttpRequestHandlerInterface lastHandler = protocolHandler.handle(request);
+        } catch (NoHttpHandlerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ProtocolNotHandledException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (VerbNotAllowedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }
